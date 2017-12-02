@@ -6,14 +6,14 @@ var middleware = require("../middleware/index.js");
 
 // INDEX
 router.get("/songs/", function(req, res) {
+	var noMatch;
 	if (req.query.search) {
 		const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-		Song.find({name: regex}, function(err, matchingSongs) {
+		Song.find({$or: [{name: regex}, {album: regex}, {"uploader.username" : regex}]}, function(err, matchingSongs) {
 			if (err) {
 				console.log(err);
 			}
 			else {
-				var noMatch;
 				if (matchingSongs.length == 0) {
 					noMatch = "Sorry. We couldn't find a song for you. Please try again."
 				}
@@ -27,8 +27,7 @@ router.get("/songs/", function(req, res) {
 				console.log(err);
 			}
 			else {
-				var sound = "sound.mp3"
-				res.render("songs/index", {songs: allSongs, sound: sound});
+				res.render("songs/index", {songs: allSongs, noMatch: noMatch});
 			}
 		});
 	}
