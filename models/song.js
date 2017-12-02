@@ -4,6 +4,7 @@ var songSchema = new mongoose.Schema ({
 	name: String,
 	image: String,
    song: String,
+   album: String,
 	createdAt: {type: Date, default: Date.now()},
    
 	uploader: {

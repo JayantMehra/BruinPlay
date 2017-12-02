@@ -28,13 +28,14 @@ router.post("/songs",  middleware.isLoggedIn, function(req, res) {
 	var name = req.body.name;
 	var image = req.body.image;
 	var song = req.body.song;
+	var album = req.body.album;
 
 	var uploader = {
         id: req.user._id,
         username: req.user.username
     };
 
-	var newSong = {name: name, uploader: uploader, image: image, song: song};
+	var newSong = {name: name, uploader: uploader, image: image, song: song, album: album};
 
 	Song.create(newSong, function(err, newlyCreated) {
 		if (err) {
@@ -55,7 +56,7 @@ router.get("/songs/:id", middleware.isLoggedIn, function(req, res) {
 		}
 		else {
 			if (req.xhr) {
-				var songObject = {name: foundSong.name, song: foundSong.song, image: foundSong.image, uploader: foundSong.uploader.username};
+				var songObject = {name: foundSong.name, song: foundSong.song, image: foundSong.image, album: foundSong.album, uploader: foundSong.uploader.username};
 				User.findByIdAndUpdate(req.user._id, {$push: {recents: songObject}}, function(err, user) {
 					if (err) {
 						console.log(err);

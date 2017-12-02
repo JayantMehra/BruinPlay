@@ -20,7 +20,7 @@
                        
             		      <img src = "<%= song.image %>">
             		      <div class="caption">
-            		          <h4><%= song.name %></h4>
+            		          <h4><%= song.name %>, <em><%= song.album %></em></h4>
                               <em><%= song.uploader.username %>, <%= moment(song.createdAt).fromNow() %></em>
             		      </div>
                         <audio controls  id="<%= song._id %>" class="not-playing">
