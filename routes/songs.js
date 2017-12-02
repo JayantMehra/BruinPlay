@@ -8,13 +8,16 @@ var middleware = require("../middleware/index.js");
 router.get("/songs/", function(req, res) {
 	if (req.query.search) {
 		const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-		Song.find({name: regex}, function(err, allSongs) {
+		Song.find({name: regex}, function(err, matchingSongs) {
 			if (err) {
 				console.log(err);
 			}
 			else {
-				var sound = "sound.mp3"
-				res.render("songs/index", {songs: allSongs, sound: sound});
+				var noMatch;
+				if (matchingSongs.length == 0) {
+					noMatch = "Sorry. We couldn't find a song for you. Please try again."
+				}
+				res.render("songs/index", {songs: matchingSongs, noMatch: noMatch});
 			}
 		});
 	}
@@ -63,21 +66,25 @@ router.post("/songs",  middleware.isLoggedIn, function(req, res) {
 
 //	SHOW
 
-router.get("/songs/:id", middleware.isLoggedIn, function(req, res) {
+router.get("/songs/:id", function(req, res) {
 	Song.findById(req.params.id, function(err, foundSong) {
 		if (err) {
 			console.log(err);
 		}
 		else {
 			if (req.xhr) {
-				var songObject = {name: foundSong.name, song: foundSong.song, image: foundSong.image, album: foundSong.album, uploader: foundSong.uploader.username};
-				User.findByIdAndUpdate(req.user._id, {$push: {recents: songObject}}, function(err, user) {
-					if (err) {
-						console.log(err);
-					}
-				});
-
-				res.json(foundSong);
+				if (typeof(req.user) != "undefined") {
+					var songObject = {name: foundSong.name, song: foundSong.song, image: foundSong.image, album: foundSong.album, uploader: foundSong.uploader.username};
+					User.findByIdAndUpdate(req.user._id, {$push: {recents: songObject}}, function(err, user) {
+						if (err) {
+							console.log(err);
+						}
+					});
+					res.json(foundSong);
+				}
+				else {
+					res.json(foundSong);
+				}
 			}
 		}
 	})
