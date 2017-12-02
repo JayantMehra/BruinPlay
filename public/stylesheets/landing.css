@@ -1,0 +1,82 @@
+body {
+    background-color: #000;
+}
+
+#landing-header {
+  z-index: 1;
+  position: relative;
+  text-align: center;
+  padding-top: 40vh;
+}
+
+#landing-header h1 {
+  color: #fff;
+}
+
+.slideshow { 
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.slideshow li { 
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  z-index: 0;
+  animation: imageAnimation 50s linear infinite; 
+}
+
+.slideshow li:nth-child(1) { 
+  background-image: url(https://audiouniverseindia.files.wordpress.com/2015/02/123735de18986a8b_119639062_1_-xxxlarge_2x.jpg) 
+}
+.slideshow li:nth-child(2) { 
+  background-image: url(https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/NAuOO95cgiknue920/videoblocks-kid-in-headphones-listening-to-music-closeup-portrait-little-boy-wearing-checkered-shirt-watching-cartoons-on-smartphone-and-headphones-on-electronic-devices-for-children-education-and-fun_rmlygb722e_thumbnail-full01.png);
+  animation-delay: 10s; 
+}
+.slideshow li:nth-child(3) { 
+  background-image: url(http://media.socastsrm.com/wordpress/wp-content/blogs.dir/106/files/2017/09/the-chills.jpg);
+  animation-delay: 20s; 
+}
+.slideshow li:nth-child(4) { 
+  background-image: url("https://img.huffingtonpost.com/asset/57b36e811800001800bcb291.jpg?ops=1910_1000");
+  animation-delay: 30s;
+}
+.slideshow li:nth-child(5) { 
+  background-image: url(https://az616578.vo.msecnd.net/files/2017/03/12/6362495341861478221088248855_lwfQm84.jpg);
+  animation-delay: 40s; 
+}
+
+@keyframes imageAnimation { 
+  0% { 
+    opacity: 0; 
+    animation-timing-function: ease-in;
+  }
+  10% {
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+  20% {
+    opacity: 1
+  }
+  30% {
+    opacity: 0
+  }
+}
+
+/* Older browser support - .no-cssanimations class added by modernizr */
+.no-cssanimations .slideshow li {
+	opacity: 1;
+}

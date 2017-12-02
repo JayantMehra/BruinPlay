@@ -10,7 +10,19 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "connect-flash": "^0.1.1",
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
-    "hbs": "^4.0.1"
+    "express-sanitizer": "^1.0.2",
+    "express-session": "^1.15.6",
+    "hbs": "^4.0.1",
+    "howler": "^2.0.5",
+    "method-override": "^2.3.10",
+    "moment": "^2.19.3",
+    "mongoose": "^4.13.5",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^4.4.0",
+    "play-sound": "^1.1.1"
   }
 }

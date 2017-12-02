@@ -1,0 +1,36 @@
+<% include ../partials/header %>
+
+<header class="jumbotron">
+    <div class="container">        
+        <h1>Welcome to Song</h1>
+        <p>Listen to your favorite songs. Upload your own.</p>
+        <p>
+            <a class= "btn btn-primary btn-md" href="/songs/new">Upload a New Song</a>
+        </p>
+    </div>
+</header>
+        
+<div class="row text-center" style="display:flex; flex-wrap:wrap;">
+	<% songs.forEach(function(song) { %>
+    
+		<div class="col-md-4 col-sm-6">  
+            <form action="/songs/<%= song._id %>" id="playSong">
+                <button>
+                    <div class="thumbnail">
+                       
+            		      <img src = "<%= song.image %>">
+            		      <div class="caption">
+            		          <h4><%= song.name %></h4>
+                              <em><%= song.uploader.username %>, <%= moment(song.createdAt).fromNow() %></em>
+            		      </div>
+                        <audio controls  id="<%= song._id %>" class="not-playing">
+                        </audio>
+    		        </div>
+                </button>
+            </form>
+		</div> 
+    
+	<% }); %>
+</div>
+
+<% include ../partials/footer %>

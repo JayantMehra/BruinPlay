@@ -1,0 +1,12 @@
+button {
+    padding: 0;
+    color: white;
+    border: 0;
+    outline: none;
+}
+
+.not-playing {
+	opacity: 0;
+}
+
+
