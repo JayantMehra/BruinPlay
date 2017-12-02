@@ -29,20 +29,21 @@
 
     <div class="tab-content" style="padding-top: 5px;">
     	<div role="tabpanel" class="tab-pane fade in active" id="your_content">
+            
             <% songs.forEach(function(song) { %>
 				<% if (String(song.uploader.id) == String(user._id)) {%>
                 <div style="text-align: center">
-					<div class="col-md-4 col-sm-6">  
+					<div class="col-md-4 col-sm-6"> 
                     	<div class="thumbnail">
-                            
             		      	<img src = "<%= song.image %>">
             		      	<div class="caption">
-            		          	<h4><%= song.name %></h4>
+            		          	<h4><%= song.name %>, <em><%= song.album %></em></h4>
                               	<em><%= moment(song.createdAt).fromNow() %></em>
             		      	</div>
                         	<audio controls  id="<%= song._id %>" src="<%= song.song %>">
                         	</audio>
                             <br>
+
                             <form style="display: inline;" class="delete-item-form" action="/users/songs/<%=song._id%>?_method=DELETE" method="POST">
                                 <button class="btn btn-danger btn-xs">
                                     Delete
@@ -54,22 +55,29 @@
 				<% } %>
 			<% }); %>
         </div>
+        
 
     	<div role="tabpanel" class="tab-pane fade" id="recents">
             <% for(var i = 0; i < user.recents.length; i++) { %>
-                <% if(i == user.recents.length - 1 || (user.recents[i].name != user.recents[i+1].name)) {%>
-                <div style="text-align: center">
-                    <div class="col-md-4 col-sm-6">  
-                        <div class="thumbnail">
-                            <img src = "<%= user.recents[i].image %>">
-                            <div class="caption">
-                                <h4><%= user.recents[i].name %></h4>
-                                <em><%= user.recents[i].uploader %></em>
+                <%  var found = 0 %>
+                <% for(var j = 0; j < i; j++) {%>
+                    <% if(user.recents[j].name === user.recents[i].name) { %>
+                        <% found ++ %>
+                    <%  } %>
+                <%  } %>
+                <% if(found == 0) { %>
+                    <div style="text-align: center">
+                        <div class="col-md-4 col-sm-6">  
+                            <div class="thumbnail">
+                                <img src = "<%= user.recents[i].image %>">
+                                <div class="caption">
+                                    <h4><%= user.recents[i].name %></h4>
+                                    <em><%= user.recents[i].uploader %></em>
+                                </div>
+                                <br>
                             </div>
-                            <br>
                         </div>
                     </div>
-                </div>
                 <% } %>
             <% }; %>
         </div>
