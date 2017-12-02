@@ -6,15 +6,29 @@ var middleware = require("../middleware/index.js");
 
 // INDEX
 router.get("/songs/", function(req, res) {
-	Song.find({}, function(err, allSongs) {
-		if (err) {
-			console.log(err);
-		}
-		else {
-			var sound = "sound.mp3"
-			res.render("songs/index", {songs: allSongs, sound: sound});
-		}
-	})
+	if (req.query.search) {
+		const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+		Song.find({name: regex}, function(err, allSongs) {
+			if (err) {
+				console.log(err);
+			}
+			else {
+				var sound = "sound.mp3"
+				res.render("songs/index", {songs: allSongs, sound: sound});
+			}
+		});
+	}
+	else {
+		Song.find({}, function(err, allSongs) {
+			if (err) {
+				console.log(err);
+			}
+			else {
+				var sound = "sound.mp3"
+				res.render("songs/index", {songs: allSongs, sound: sound});
+			}
+		});
+	}
 });
 
 //	NEW
@@ -68,5 +82,9 @@ router.get("/songs/:id", middleware.isLoggedIn, function(req, res) {
 		}
 	})
 });
+
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
 
 module.exports = router;
